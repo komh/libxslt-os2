@@ -47,7 +47,7 @@ GENERATED = libxsltclass.py \
 	   libxsltclass.txt
 
 # Generated sources
-all-local: libxslt.py
+all-local: libxslt.py .libs/libxsltmod.pyd
 
 $(GENERATED): gen_prog
 
@@ -56,6 +56,16 @@ gen_prog: $(srcdir)/$(GENERATE) $(API_DESC)
 	touch gen_prog
 
 $(libxsltmod_la_OBJECTS): $(GENERATED)
+
+.libs/libxsltmod.pyd: libxsltmod.la
+	test -f .libs/xsltmod.pyd || exit 0 && rm -f $@ && ln -s xsltmod.pyd $@
+
+install-exec-hook:
+	cd $(DESTDIR)$(pyexecdir) && test -f xsltmod.pyd || exit 0 && \
+	  rm -f libxsltmod.pyd && ln -s xsltmod.pyd libxsltmod.pyd
+
+uninstall-hook:
+	rm -f $(DESTDIR)$(pyexecdir)/libxsltmod.pyd
 
 endif
 

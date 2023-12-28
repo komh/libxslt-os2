@@ -194,6 +194,9 @@ AS_IF([test "x$with_python" != "xno"], [
         *-*-cygwin* | *-*-mingw* | *-*-msys* )
             PYTHON_LDFLAGS="-no-undefined -shrext .pyd"
             ;;
+        *-*-os2* )
+            PYTHON_LDFLAGS="-no-undefined -shrext .pyd -Zomf"
+            ;;
     esac
 ])
 AC_SUBST(PYTHON_LDFLAGS)
