@@ -107,7 +107,7 @@ CONFIG_CLEAN_VPATH_FILES =
 am__DEPENDENCIES_1 =
 @WITH_MODULES_TRUE@xmlsoft_org_xslt_testplugin_la_DEPENDENCIES =  \
 @WITH_MODULES_TRUE@	$(top_builddir)/libxslt/libxslt.la \
-@WITH_MODULES_TRUE@	$(am__DEPENDENCIES_1)
+@WITH_MODULES_TRUE@	$(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1)
 am__xmlsoft_org_xslt_testplugin_la_SOURCES_DIST = testplugin.c
 @WITH_MODULES_TRUE@am_xmlsoft_org_xslt_testplugin_la_OBJECTS = xmlsoft_org_xslt_testplugin_la-testplugin.lo
 xmlsoft_org_xslt_testplugin_la_OBJECTS =  \
@@ -434,7 +434,7 @@ runtest_SOURCES = runtest.c
 @WITH_MODULES_TRUE@plugindir = $(abs_builddir)/.libs
 @WITH_MODULES_TRUE@xmlsoft_org_xslt_testplugin_la_CFLAGS = $(AM_CFLAGS) -DMODULE_COMPILE
 @WITH_MODULES_TRUE@xmlsoft_org_xslt_testplugin_la_SOURCES = testplugin.c
-@WITH_MODULES_TRUE@xmlsoft_org_xslt_testplugin_la_LIBADD = $(top_builddir)/libxslt/libxslt.la $(EXTRA_LIBS)
+@WITH_MODULES_TRUE@xmlsoft_org_xslt_testplugin_la_LIBADD = $(top_builddir)/libxslt/libxslt.la $(LIBXML_LIBS) $(EXTRA_LIBS)
 @WITH_MODULES_TRUE@xmlsoft_org_xslt_testplugin_la_LDFLAGS = \
 @WITH_MODULES_TRUE@	$(AM_LDFLAGS) -no-undefined \
 @WITH_MODULES_TRUE@	-module -avoid-version -rpath $(plugindir)

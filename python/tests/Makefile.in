@@ -576,15 +576,15 @@ uninstall-am: uninstall-dist_exampleDATA
 
 
 @WITH_PYTHON_TRUE@check-local: $(TESTSPY)
-@WITH_PYTHON_TRUE@	@(export PYTHONPATH="..:../.libs:$(srcdir)/..:$$PYTHONPATH"; \
-@WITH_PYTHON_TRUE@	  export LD_LIBRARY_PATH="$(top_builddir)/libxslt/.libs:$(top_builddir)/libexslt/.libs:$$LD_LIBRARY_PATH"; \
-@WITH_PYTHON_TRUE@	  export DYLD_LIBRARY_PATH="$(top_builddir)/libxslt/.libs:$(top_builddir)/libexslt/.libs:$$DYLD_LIBRARY_PATH"; \
-@WITH_PYTHON_TRUE@	  export PATH="$(top_builddir)/libxslt/.libs:$(top_builddir)/libexslt/.libs:$$PATH" ; \
+@WITH_PYTHON_TRUE@	@(export PYTHONPATH="..$(PATH_SEPARATOR)../.libs$(PATH_SEPARATOR)$(srcdir)/..$(PATH_SEPARATOR)$$PYTHONPATH"; \
+@WITH_PYTHON_TRUE@	  export LD_LIBRARY_PATH="$(top_builddir)/libxslt/.libs$(PATH_SEPARATOR)$(top_builddir)/libexslt/.libs$(PATH_SEPARATOR)$$LD_LIBRARY_PATH"; \
+@WITH_PYTHON_TRUE@	  export DYLD_LIBRARY_PATH="$(top_builddir)/libxslt/.libs$(PATH_SEPARATOR)$(top_builddir)/libexslt/.libs$(PATH_SEPARATOR)$$DYLD_LIBRARY_PATH"; \
+@WITH_PYTHON_TRUE@	  export PATH="$(top_builddir)/libxslt/.libs$(PATH_SEPARATOR)$(top_builddir)/libexslt/.libs$(PATH_SEPARATOR)$$PATH" ; \
 @WITH_PYTHON_TRUE@	  if test "x$(LIBXML_SRC)" != "x" ; then \
-@WITH_PYTHON_TRUE@            PYTHONPATH="$(LIBXML_SRC)/python:$(LIBXML_SRC)/python/.libs:$$PYTHONPATH"; \
-@WITH_PYTHON_TRUE@	    LD_LIBRARY_PATH="$(LIBXML_SRC)/.libs:$$LD_LIBRARY_PATH"; \
-@WITH_PYTHON_TRUE@	    DYLD_LIBRARY_PATH="$(LIBXML_SRC)/.libs:$$DYLD_LIBRARY_PATH"; \
-@WITH_PYTHON_TRUE@	    PATH="$(LIBXML_SRC)/.libs:$$PATH" ; \
+@WITH_PYTHON_TRUE@            PYTHONPATH="$(LIBXML_SRC)/python$(PATH_SEPARATOR)$(LIBXML_SRC)/python/.libs$(PATH_SEPARATOR)$$PYTHONPATH"; \
+@WITH_PYTHON_TRUE@	    LD_LIBRARY_PATH="$(LIBXML_SRC)/.libs$(PATH_SEPARATOR)$$LD_LIBRARY_PATH"; \
+@WITH_PYTHON_TRUE@	    DYLD_LIBRARY_PATH="$(LIBXML_SRC)/.libs$(PATH_SEPARATOR)$$DYLD_LIBRARY_PATH"; \
+@WITH_PYTHON_TRUE@	    PATH="$(LIBXML_SRC)/.libs$(PATH_SEPARATOR)$$PATH" ; \
 @WITH_PYTHON_TRUE@          fi; \
 @WITH_PYTHON_TRUE@	  for test in $(TESTSPY) ; do \
 @WITH_PYTHON_TRUE@	    echo "-- $$test" ; \

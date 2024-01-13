@@ -864,6 +864,8 @@ distclean-generic:
 maintainer-clean-generic:
 	@echo "This command is intended for maintainers to use"
 	@echo "it deletes files that may require special tools to rebuild."
+@WITH_PYTHON_FALSE@install-exec-hook:
+@WITH_PYTHON_FALSE@uninstall-hook:
 clean: clean-recursive
 
 clean-am: clean-generic clean-libtool clean-local \
@@ -896,7 +898,8 @@ install-dvi: install-dvi-recursive
 install-dvi-am:
 
 install-exec-am: install-pyexecLTLIBRARIES
-
+	@$(NORMAL_INSTALL)
+	$(MAKE) $(AM_MAKEFLAGS) install-exec-hook
 install-html: install-html-recursive
 
 install-html-am:
@@ -939,8 +942,10 @@ ps-am:
 
 uninstall-am: uninstall-nodist_pythonPYTHON \
 	uninstall-pyexecLTLIBRARIES
-
-.MAKE: $(am__recursive_targets) install-am install-strip
+	@$(NORMAL_INSTALL)
+	$(MAKE) $(AM_MAKEFLAGS) uninstall-hook
+.MAKE: $(am__recursive_targets) install-am install-exec-am \
+	install-strip uninstall-am
 
 .PHONY: $(am__recursive_targets) CTAGS GTAGS TAGS all all-am all-local \
 	am--depfiles check check-am clean clean-generic clean-libtool \
@@ -949,15 +954,16 @@ uninstall-am: uninstall-nodist_pythonPYTHON \
 	distclean-libtool distclean-tags distdir dvi dvi-am html \
 	html-am info info-am install install-am install-data \
 	install-data-am install-dvi install-dvi-am install-exec \
-	install-exec-am install-html install-html-am install-info \
-	install-info-am install-man install-nodist_pythonPYTHON \
-	install-pdf install-pdf-am install-ps install-ps-am \
-	install-pyexecLTLIBRARIES install-strip installcheck \
-	installcheck-am installdirs installdirs-am maintainer-clean \
-	maintainer-clean-generic mostlyclean mostlyclean-compile \
-	mostlyclean-generic mostlyclean-libtool pdf pdf-am ps ps-am \
-	tags tags-am uninstall uninstall-am \
-	uninstall-nodist_pythonPYTHON uninstall-pyexecLTLIBRARIES
+	install-exec-am install-exec-hook install-html install-html-am \
+	install-info install-info-am install-man \
+	install-nodist_pythonPYTHON install-pdf install-pdf-am \
+	install-ps install-ps-am install-pyexecLTLIBRARIES \
+	install-strip installcheck installcheck-am installdirs \
+	installdirs-am maintainer-clean maintainer-clean-generic \
+	mostlyclean mostlyclean-compile mostlyclean-generic \
+	mostlyclean-libtool pdf pdf-am ps ps-am tags tags-am uninstall \
+	uninstall-am uninstall-hook uninstall-nodist_pythonPYTHON \
+	uninstall-pyexecLTLIBRARIES
 
 .PRECIOUS: Makefile
 
@@ -970,7 +976,7 @@ uninstall-am: uninstall-nodist_pythonPYTHON \
 @WITH_PYTHON_TRUE@	cat $(srcdir)/libxsl.py libxsltclass.py > $@
 
 # Generated sources
-@WITH_PYTHON_TRUE@all-local: libxslt.py
+@WITH_PYTHON_TRUE@all-local: libxslt.py .libs/libxsltmod.pyd
 
 @WITH_PYTHON_TRUE@$(GENERATED): gen_prog
 
@@ -979,6 +985,16 @@ uninstall-am: uninstall-nodist_pythonPYTHON \
 @WITH_PYTHON_TRUE@	touch gen_prog
 
 @WITH_PYTHON_TRUE@$(libxsltmod_la_OBJECTS): $(GENERATED)
+
+@WITH_PYTHON_TRUE@.libs/libxsltmod.pyd: libxsltmod.la
+@WITH_PYTHON_TRUE@	test -f .libs/xsltmod.pyd || exit 0 && rm -f $@ && ln -s xsltmod.pyd $@
+
+@WITH_PYTHON_TRUE@install-exec-hook:
+@WITH_PYTHON_TRUE@	cd $(DESTDIR)$(pyexecdir) && test -f xsltmod.pyd || exit 0 && \
+@WITH_PYTHON_TRUE@	  rm -f libxsltmod.pyd && ln -s xsltmod.pyd libxsltmod.pyd
+
+@WITH_PYTHON_TRUE@uninstall-hook:
+@WITH_PYTHON_TRUE@	rm -f $(DESTDIR)$(pyexecdir)/libxsltmod.pyd
 
 tests test: all
 	cd tests && $(MAKE) tests
